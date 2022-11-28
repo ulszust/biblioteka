@@ -18,9 +18,9 @@ function App() {
       <Header></Header>
       <Router>
         <Routes>
-          <Route exact path="/" component={Home} />
-          <Route path="/books/search" component={SearchBook} />
-          <Route path="/user" component={MyRentals} />
+          <Route path="/" element={<Home/>} exact />
+          <Route path="/books/search" element={<SearchBook/>} />
+          <Route path="/user" element={<MyRentals/>} />
         </Routes>
       </Router>
       <Footer></Footer>
