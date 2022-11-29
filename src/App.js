@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from 'react-router-dom';
 import './App.css';
+import Footer from './Footer';
+import Header from './Header';
+import Home from './Home';
+import MyRentals from './MyRentals';
+import SearchBook from './SearchBook';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.dupadupa
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home/>} exact />
+          <Route path="/books/search" element={<SearchBook/>} />
+          <Route path="/user" element={<MyRentals/>} />
+        </Routes>
+      </Router>
+      <Footer></Footer>
+    </>
   );
 }
 
