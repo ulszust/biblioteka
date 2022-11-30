@@ -5,16 +5,14 @@ import Navbar from 'react-bootstrap/Navbar';
 function Header() {
   return (
     <Navbar bg="light" expand="sm">
-      <Container>
-        <Navbar.Brand href="/">Biblioteka</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/books/search">Szukaj</Nav.Link>
-            <Nav.Link href="/user">Moje wypożyczenia</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+      <Navbar.Brand href="/">Biblioteka</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link href="/books/search">Szukaj</Nav.Link>
+          <Nav.Link href="/user">Moje wypożyczenia</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 }
