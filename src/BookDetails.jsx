@@ -7,7 +7,7 @@ import { Card } from 'react-bootstrap';
 import BookCover from './images/ksiazka6.jpg'
 import Button from 'react-bootstrap/Button';
 
-export const MOCK_BOOK = { title: 'Bezpieczeństwo Aplikacji Webowych', authors: ['pierwszy', 'drugi', 'trzeci'], publisher: 'Securitum', year: 2019 }
+export const MOCK_BOOK = { id: 1, title: 'Bezpieczeństwo Aplikacji Webowych', authors: ['pierwszy', 'drugi', 'trzeci'], publisher: 'Securitum', year: 2019 }
 
 function BookDetails() {
   const { bookId } = useParams();
