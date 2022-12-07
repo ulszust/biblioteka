@@ -67,7 +67,7 @@ function BookDetailsCard({ book }) {
         <Card.Text>Autor: {book.authors.join(",  ")}.</Card.Text>
         <Card.Text>Wydawnictwo: {book.publisher}</Card.Text>
         <Card.Text>Rok wydania: {book.year}</Card.Text>
-        <Button variant="secondary">Wypożycz</Button>
+        <Button variant="secondary" className='card-button'>Wypożycz</Button>
       </Card.Body>
     </Card>
   );
