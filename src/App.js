@@ -10,6 +10,7 @@ import Header from './Header';
 import Home from './Home';
 import MyRentals from './MyRentals';
 import SearchBook from './SearchBook';
+import BookDetails from './BookDetails';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Home/>} exact />
           <Route path="/books/search" element={<SearchBook/>} />
           <Route path="/user" element={<MyRentals/>} />
+          <Route path="/books/:bookId" element={<BookDetails/>}/>
         </Routes>
       </Router>
       <Footer></Footer>
