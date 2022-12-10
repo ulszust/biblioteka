@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"; 
+import db from "./Firebase";
 
 
 
@@ -14,7 +15,9 @@ const AddBook = () => {
 
     function onSubmit(e) {
         e.preventDefault();
-        console.log({title, authors: authors.split(','), publisher, year});
+        const book = {title, authors: authors.split(','), publisher, year}
+        console.log("będzie dodane", book);
+        addToDB(book).then((created) => console.log(created))
     }
     return (
         <>
@@ -23,19 +26,19 @@ const AddBook = () => {
                 <fieldset className="form-addbook">
                     <Form.Group>
                         <Form.Label htmlFor="title">Tytuł książki</Form.Label>
-                        <Form.Control id="title" placeholder="Podaj tytuł książki" onChange={(e) => setTitle(e.target.value)} />
+                        <Form.Control id="title" placeholder="Podaj tytuł książki" required onChange={(e) => setTitle(e.target.value)} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label htmlFor="authors">Autor</Form.Label>
-                        <Form.Control id="authors" placeholder="Podaj autora/autorów" onChange={(e) => setAuthors(e.target.value)} />
+                        <Form.Control id="authors" placeholder="Podaj autora/autorów" required onChange={(e) => setAuthors(e.target.value)} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label htmlFor="publisher">Wydawnictwo</Form.Label>
-                        <Form.Control id="publisher" placeholder="Podaj wydawnictwo" onChange={(e) => setPublisher(e.target.value)} />
+                        <Form.Control id="publisher" placeholder="Podaj wydawnictwo" required onChange={(e) => setPublisher(e.target.value)} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label htmlFor="year">Rok wydania</Form.Label>
-                        <Form.Control id="year" placeholder="Podaj rok wydania" onChange={(e) => setYear(e.target.value)} />
+                        <Form.Control id="year" type="number" placeholder="Podaj rok wydania" required onChange={(e) => setYear(e.target.value)} />
                     </Form.Group>
                     <Form.Group className="form-checkbox">
                         <Form.Check
@@ -47,6 +50,15 @@ const AddBook = () => {
                 </fieldset>
             </Form></>
     );
+}
+
+async function addToDB(book) {
+    const result = await addDoc(collection(db, "books"), book);
+    console.log("rezultat", result)
+    return {
+        ...book,
+        id: result.id
+    }
 }
 
 export default AddBook;
