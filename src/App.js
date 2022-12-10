@@ -11,6 +11,7 @@ import Home from './Home';
 import MyRentals from './MyRentals';
 import SearchBook from './SearchBook';
 import BookDetails from './BookDetails';
+import AddBook from './AddBook';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/books/search" element={<SearchBook/>} />
           <Route path="/user" element={<MyRentals/>} />
           <Route path="/books/:bookId" element={<BookDetails/>}/>
+          <Route path="/books/add" element={<AddBook/>}/>
         </Routes>
       </Router>
       <Footer></Footer>

@@ -74,9 +74,57 @@ code {
 }
 
 .td-align-middle {
-text-align: center;
+  text-align: center;
 }
 
 .badge-width {
   width: 117px;
+}
+
+.form-addbook {
+  margin-left: auto;
+  margin-right: auto;
+  width: 40rem;
+  margin-top: 30px;
+}
+
+.form-button {
+  float: inline-end;
+  width: inherit;
+  margin-top: 30px;
+}
+
+.form-checkbox {
+  margin-top: 20px;
+}
+
+.addbook-header {
+  margin-top: 20px;
+}
+
+.book-search-item-body {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.book-search-item>.card>.card-body:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+  -moz-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+  box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+}
+
+.book-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.book-search-input {
+  margin: 20px 20px 20px 20px;
+}
+
+.book-search-item-authors {
+  color: darkgray;
 }
