@@ -14,6 +14,11 @@ const SearchBook = () => {
   const [allBooks, setAllBooks] = useState([]);
   const [matchedBooks, setMatchedBooks] = useState([]);
 
+  function onBookCardClick(bookId) {
+    console.log("po kliknięciu", bookId)
+    window.open("/books/" + bookId) 
+  }
+
   //useEffect pozwala nam tutaj na pobranie "w tle" wszystkich książek z bazdy danych, żeby można było ich użyć dowolnym momencie.
   //useEffect przyjmuje dwa parametry. Pierwszy to funkcja anonimowa, drugi to tablica zależności. Pusta oznacza,
   // że wykona się tylko raz (na początku)
@@ -82,7 +87,7 @@ const SearchBook = () => {
           //W tym przypadku: dla każdego parametru(book) funkcji anonimowej zwróć poniższego diva. 
           return (
             <div className="book-search-item">
-              <Card body>
+              <Card body onClick={() => onBookCardClick(book.id)} key={book.id}>
                 <div className="book-search-item-body">
                   <div className="book-search-item-title">{book.title}</div>
                   <div className="book-search-item-authors">
@@ -113,7 +118,7 @@ async function getAllBooksFromDB() {
     console.log(doc.id, " => ", doc.data());
   });
   // z funkcji asynchronicznej zwracamy przemapowane dokumenty wyciągnięte z firebase (zgodnie z dokumentacją)
-  return booksCollection.docs.map((it) => it.data());
+  return booksCollection.docs.map((it) => ({id: it.id, ...it.data()}));
 }
 
 export default SearchBook;

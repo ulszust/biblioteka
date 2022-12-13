@@ -1,31 +1,11 @@
-import { doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
-import { MOCK_BOOK } from "./BookDetails";
 import db from "./Firebase";
 
-export const MOCK_BOOK_2 = {
-  id: 2,
-  title: "Matematyka",
-  authors: ["Kiełbasa"],
-  publisher: "Najlepszy",
-  year: 1690,
-};
-
-const MOCK_RENTALS = [
-  {
-    id: "user",
-    rentals: [
-      { book: MOCK_BOOK, dueDate: new Date("2034-01-01") },
-      { book: MOCK_BOOK_2, dueDate: new Date("2022-04-05") },
-    ],
-  },
-];
-
 const MyRentals = () => {
-  const rentals = MOCK_RENTALS[0].rentals;
 
   const [allBooks, setAllBooks] = useState([]);
   const [userRentals, setUserRentals] = useState([]);
@@ -45,6 +25,7 @@ const MyRentals = () => {
           return {
             bookId: rental.bookId,
             dueDate: rental.dueDate.toDate(),
+            //filter zwraca tablicę więc wyciągamy tylko pierwszy element[0]
             book: allBooks.filter((book) => book.id === rental.bookId)[0],
           };
         });
