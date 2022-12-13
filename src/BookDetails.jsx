@@ -7,8 +7,6 @@ import { Card } from 'react-bootstrap';
 import BookCover from './images/ksiazka6.jpg'
 import Button from 'react-bootstrap/Button';
 
-export const MOCK_BOOK = { id: 1, title: 'Bezpieczeństwo Aplikacji Webowych', authors: ['pierwszy', 'drugi', 'trzeci'], publisher: 'Securitum', year: 2019 }
-
 function BookDetails() {
   const { bookId } = useParams();
   const [book, setBook] = useState(null);
@@ -25,7 +23,6 @@ function BookDetails() {
 
   return (
     <>
-      <h1>BookId is {bookId}</h1>
       {
         !!loading &&
         <Spinner animation="border" role="status">
