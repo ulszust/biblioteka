@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import db from "./Firebase";
-import { doc, getDoc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  Timestamp,
+} from "firebase/firestore";
 import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";
 import BookCover from "./images/ksiazka6.jpg";
@@ -43,7 +49,7 @@ async function getBook(bookId) {
       console.log("Document data:", bookSnap.data());
       return {
         ...bookSnap.data(),
-        id: bookId
+        id: bookId,
       };
     } else {
       // doc.data() will be undefined in this case
@@ -62,7 +68,16 @@ function BookDetailsCard({ book }) {
     //zmieniamy wartość dueDate za pomocą setDate. Na początku pobieramy datę z dueDate za pomocą
     //getDate (czyli dzisiaj) i dodajemy 14 dni
     dueDate.setDate(dueDate.getDate() + 14);
-    addRentalToDB({ bookId: book.id, dueDate }).then(() => {});
+    addRentalToDB({ bookId: book.id, dueDate }).then(
+      () => {
+        window.location = "/user/";
+      },
+      () => {
+        window.alert(
+          "Nie udało się wypożyczyć książki. Spróbuj ponownie później."
+        );
+      }
+    );
   }
 
   return (
@@ -89,7 +104,7 @@ async function addRentalToDB({ bookId, dueDate }) {
   const rentalRef = doc(db, "rentals", "user");
   console.log("dodamy rental", bookId, dueDate);
   await updateDoc(rentalRef, {
-    rentals: arrayUnion({bookId, dueDate: Timestamp.fromDate(dueDate)}),
+    rentals: arrayUnion({ bookId, dueDate: Timestamp.fromDate(dueDate) }),
   });
 }
 
