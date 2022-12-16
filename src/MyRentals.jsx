@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { async } from "@firebase/util";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  arrayRemove,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
@@ -6,16 +14,16 @@ import Table from "react-bootstrap/Table";
 import db from "./Firebase";
 
 const MyRentals = () => {
-
   const [allBooks, setAllBooks] = useState([]);
   const [userRentals, setUserRentals] = useState([]);
+  const [counter, setCounter] = useState("");
 
   useEffect(() => {
     getAllBooksFromDB().then((books) => {
       console.log("pobrano książki", books);
       setAllBooks(books);
     });
-  }, []);
+  }, [counter]);
 
   useEffect(() => {
     if (allBooks?.length > 0) {
@@ -38,6 +46,18 @@ const MyRentals = () => {
     return rental.dueDate < new Date();
   }
 
+  function onReturnBookClick(rental) {
+    removeBookFromRentals(rental).then(
+      () => {
+        setCounter(counter + 1);
+        window.alert("Książka została zwrócona.");
+      },
+      () => {
+        window.alert("Nie udało się zwrócić książki.Spróbuj ponownie później.");
+      }
+    );
+  }
+
   return (
     <Table className="table-user" striped bordered hover>
       <thead>
@@ -46,7 +66,8 @@ const MyRentals = () => {
           <th>Szczegóły książki</th>
           <th>Data zwrotu</th>
           <th>Status</th>
-          <th>Dodatkowe opcje</th>
+          <th>Przedłuż wypożyczenie</th>
+          <th>Zwróć książkę</th>
         </tr>
       </thead>
       <tbody>
@@ -72,6 +93,16 @@ const MyRentals = () => {
                 Przedłuż
               </Button>
             </td>
+            <td className="td-align-middle">
+              <Button
+                onClick={() => onReturnBookClick(rental)}
+                className="table-button"
+                size="sm"
+                variant="secondary"
+              >
+                Zwróć
+              </Button>
+            </td>
           </tr>
         ))}
       </tbody>
@@ -92,6 +123,13 @@ async function getAllBooksFromDB() {
     id: it.id,
     ...it.data(),
   }));
+}
+
+async function removeBookFromRentals(rental) {
+  const rentalRef = doc(db, "rentals", "user");
+  await updateDoc(rentalRef, {
+    rentals: arrayRemove({ bookId: rental.bookId, dueDate: rental.dueDate }),
+  });
 }
 
 export default MyRentals;
