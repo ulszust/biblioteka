@@ -12,11 +12,16 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import db from "./Firebase";
+import Modal from "react-bootstrap/Modal";
+import Form from 'react-bootstrap/Form';
 
 const MyRentals = () => {
   const [allBooks, setAllBooks] = useState([]);
   const [userRentals, setUserRentals] = useState([]);
   const [counter, setCounter] = useState("");
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     getAllBooksFromDB().then((books) => {
@@ -89,9 +94,34 @@ const MyRentals = () => {
               </Badge>
             </td>
             <td className="td-align-middle">
-              <Button className="table-button" size="sm" variant="secondary">
+              <Button className="table-button" size="sm" variant="secondary" onClick={handleShow}>
                 Przedłuż
               </Button>
+              <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Wydłuż termin wypożyczenia książki</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+        Możesz przedłużyć wypożyczenie maksymalnie o 21 dni. Dokonaj wyboru poniżej.
+        </p>
+        <Form.Select>
+      <option>Ile dodatkowych dni potrzebujesz?</option>
+      <option value="7">7 dni</option>
+      <option value="14">14 dni</option>
+      <option value="21">21 dni</option>
+    </Form.Select>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Zamknij
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Zapisz 
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
             </td>
             <td className="td-align-middle">
               <Button

@@ -140,3 +140,7 @@ code {
 .book-search-item-authors {
   color: darkgray;
 }
+
+.modal-backdrop {
+  background-color: rgba(0,0,0,.6) !important;
+}
