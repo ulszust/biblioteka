@@ -12,8 +12,10 @@ import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";
 import BookCover from "./images/ksiazka6.jpg";
 import Button from "react-bootstrap/Button";
+import { isUser } from "./App";
 
-function BookDetails() {
+function BookDetails(props) {
+  const { user } = props;
   const { bookId } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +36,7 @@ function BookDetails() {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       )}
-      {!loading && <BookDetailsCard book={book}></BookDetailsCard>}
+      {!loading && <BookDetailsCard book={book} user={user}></BookDetailsCard>}
     </>
   );
 }
@@ -61,7 +63,7 @@ async function getBook(bookId) {
   }
 }
 
-function BookDetailsCard({ book }) {
+function BookDetailsCard({ book, user }) {
   function onRentBookClick(book) {
     //definiujemy dueDate jako dzisiaj (dzisiaj to zawsze new Date())
     const dueDate = new Date();
@@ -88,13 +90,15 @@ function BookDetailsCard({ book }) {
         <Card.Text>Autor: {book.authors.join(",  ")}.</Card.Text>
         <Card.Text>Wydawnictwo: {book.publisher}</Card.Text>
         <Card.Text>Rok wydania: {book.year}</Card.Text>
-        <Button
-          onClick={() => onRentBookClick(book)}
-          variant="secondary"
-          className="card-button"
-        >
-          Wypożycz
-        </Button>
+        {isUser(user) && (
+          <Button
+            onClick={() => onRentBookClick(book)}
+            variant="secondary"
+            className="card-button"
+          >
+            Wypożycz
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );

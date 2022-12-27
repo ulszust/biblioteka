@@ -144,3 +144,25 @@ code {
 .modal-backdrop {
   background-color: rgba(0,0,0,.6) !important;
 }
+
+.choose-profile-modal-profile {
+  height: 100px;
+  width: 60px;
+  border: black solid 2px;
+  cursor: pointer;
+}
+
+.choose-profile-modal-profile-background {
+  height: 110px;
+  width: 70px;
+}
+
+.choose-profile-modal-profile-background:hover {
+  background-color: aquamarine;
+}
+
+
+.choose-profile-modal-body {
+  display: flex;
+  justify-content: space-evenly;
+}

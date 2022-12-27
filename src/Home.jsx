@@ -1,13 +1,15 @@
 import React from "react";
 import MyRentals from "./MyRentals";
+import { isUser } from "./App";
 
-const home = () => {
+const Home = (props) => {
+  const { user } = props;
   return (
     <div>
       <h1>HOME!!</h1>
-      <MyRentals></MyRentals>
+      {isUser(user) && <MyRentals></MyRentals>}
     </div>
   );
-}
+};
 
-export default home;
+export default Home;
