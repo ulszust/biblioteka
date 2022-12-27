@@ -18,6 +18,7 @@ function App() {
   return (
     <>
       <Header></Header>
+      <div className="padding-container">
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} exact />
@@ -27,6 +28,7 @@ function App() {
           <Route path="/books/add" element={<AddBook/>}/>
         </Routes>
       </Router>
+      </div>
       <Footer></Footer>
     </>
   );
