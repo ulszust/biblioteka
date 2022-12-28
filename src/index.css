@@ -146,23 +146,34 @@ code {
 }
 
 .choose-profile-modal-profile {
-  height: 100px;
-  width: 60px;
-  border: black solid 2px;
+  height: 80px;
+  width: 100px;
   cursor: pointer;
+  border-radius: 20%;
+
+
 }
 
 .choose-profile-modal-profile-background {
-  height: 110px;
-  width: 70px;
+  height: 80px;
+  width: 100px;
+  border-radius: 20%;
+
 }
 
 .choose-profile-modal-profile-background:hover {
-  background-color: aquamarine;
+  background-color: rgba(0,0,0,.3);
+  height: 80px;
+  width: 100px;
 }
 
 
 .choose-profile-modal-body {
   display: flex;
   justify-content: space-evenly;
+}
+
+.choose-profile-modal-profile-name {
+  text-align: center;
+  font-weight: bold;
 }

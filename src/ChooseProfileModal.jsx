@@ -1,5 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import { noop } from "bootstrap/js/src/util";
+import { PersonFill, PersonFillGear } from "react-bootstrap-icons";
 
 const ChooseProfileModal = (props) => {
   const { show, handleClose, currentUser, onProfileChanged } = props;
@@ -13,33 +14,44 @@ const ChooseProfileModal = (props) => {
         <Profile
           user="user"
           currentUser={currentUser}
-          onProfileChanged={onProfileChanged}
+          icon={
+            <PersonFill
+              size={35}
+              style={{ cursor: "pointer" }}
+              className="choose-profile-modal-profile"
+              onClick={() => onProfileChanged("user")}
+            ></PersonFill>
+          }
         ></Profile>
         <Profile
           user="admin"
           currentUser={currentUser}
-          onProfileChanged={onProfileChanged}
+          icon={
+            <PersonFillGear
+              size={35}
+              style={{ cursor: "pointer" }}
+              className="choose-profile-modal-profile"
+              onClick={() => onProfileChanged("admin")}
+            ></PersonFillGear>
+          }
         ></Profile>
       </Modal.Body>
-      <Modal.Footer>footer</Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };
 
 function Profile(props) {
-  const { user, currentUser, onProfileChanged } = props;
+  const { user, currentUser, icon } = props;
   return (
     <div>
       <div
         className="choose-profile-modal-profile-background"
-        style={{ backgroundColor: user === currentUser ? "blue" : noop() }}
+        style={{ backgroundColor: user === currentUser ? "lightblue" : noop() }}
       >
-        <div
-          className="choose-profile-modal-profile"
-          onClick={() => onProfileChanged(user)}
-        ></div>
+        {icon}
       </div>
-      <span>{user}</span>
+      <p className="choose-profile-modal-profile-name">{user}</p>
     </div>
   );
 }

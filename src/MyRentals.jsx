@@ -101,6 +101,20 @@ const MyRentals = () => {
       );
   }
 
+  function calculateCharge(dueDate) {
+    const today = new Date();
+    //jesli duedate nie jest mniejsze niz dzisiaj => '-'
+    if (dueDate >= today) {
+      return "-";
+    }
+    // w innym wypadku
+    //porownac ile minelo dni od due date do dzisiaj i pomnozyc kazdy x 0,30
+    const diffInMs = new Date(today) - new Date(dueDate);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    const charge = Math.floor(diffInDays) * 0.3;
+    return charge + " zł";
+  }
+
   return (
     <Table className="table-user" striped bordered hover>
       <thead>
@@ -109,6 +123,7 @@ const MyRentals = () => {
           <th>Szczegóły książki</th>
           <th>Data zwrotu</th>
           <th>Status</th>
+          <th>Należność</th>
           <th>Przedłuż wypożyczenie</th>
           <th>Zwróć książkę</th>
         </tr>
@@ -131,6 +146,7 @@ const MyRentals = () => {
                 {isDue(rental) ? "Przeterminowana" : "Aktywna"}
               </Badge>
             </td>
+            <td>{calculateCharge(rental.dueDate)}</td>
             <td className="td-align-middle">
               <Button
                 className="table-button"
