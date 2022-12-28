@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import db from "./Firebase";
 
 const AddBook = () => {
@@ -12,7 +12,13 @@ const AddBook = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    const book = { title, authors: authors.split(","), publisher, year };
+    const book = {
+      title,
+      authors: authors.split(","),
+      publisher,
+      year,
+      amount: 1,
+    };
     console.log("będzie dodane", book);
     addToDB(book).then(
       (created) => {

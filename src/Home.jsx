@@ -1,6 +1,7 @@
 import React from "react";
 import MyRentals from "./MyRentals";
-import { isUser } from "./App";
+import { isAdmin, isUser } from "./App";
+import MyBooks from "./MyBooks";
 
 const Home = (props) => {
   const { user } = props;
@@ -8,6 +9,7 @@ const Home = (props) => {
     <div>
       <h1>HOME!!</h1>
       {isUser(user) && <MyRentals></MyRentals>}
+      {isAdmin(user) && <MyBooks></MyBooks>}
     </div>
   );
 };

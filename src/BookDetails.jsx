@@ -12,7 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";
 import BookCover from "./images/ksiazka6.jpg";
 import Button from "react-bootstrap/Button";
-import { isUser } from "./App";
+import { isAdmin, isUser } from "./App";
 
 function BookDetails(props) {
   const { user } = props;
@@ -90,13 +90,20 @@ function BookDetailsCard({ book, user }) {
         <Card.Text>Autor: {book.authors.join(",  ")}.</Card.Text>
         <Card.Text>Wydawnictwo: {book.publisher}</Card.Text>
         <Card.Text>Rok wydania: {book.year}</Card.Text>
+        <Card.Text>Ilość egzemplarzy: {book.amount}</Card.Text>
         {isUser(user) && (
           <Button
             onClick={() => onRentBookClick(book)}
             variant="secondary"
-            className="card-button"
+            className="card-user-button"
           >
             Wypożycz
+          </Button>
+        )}
+        {isAdmin(user) && <Button variant="success">Dodaj egzemplarz</Button>}
+        {isAdmin(user) && (
+          <Button variant="danger" className="card-admin-button">
+            Usuń egzemplarz
           </Button>
         )}
       </Card.Body>

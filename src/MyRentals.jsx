@@ -112,7 +112,7 @@ const MyRentals = () => {
     const diffInMs = new Date(today) - new Date(dueDate);
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     const charge = Math.floor(diffInDays) * 0.3;
-    return charge + " zł";
+    return charge.toPrecision(2) + " zł";
   }
 
   return (

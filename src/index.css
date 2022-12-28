@@ -59,7 +59,7 @@ code {
   margin-top: 20px;
 }
 
-.card-button {
+.card-user-button {
   width: 150px;
   float: right;
   padding: 10px;
@@ -167,7 +167,6 @@ code {
   width: 100px;
 }
 
-
 .choose-profile-modal-body {
   display: flex;
   justify-content: space-evenly;
@@ -176,4 +175,10 @@ code {
 .choose-profile-modal-profile-name {
   text-align: center;
   font-weight: bold;
+}
+
+.card-admin-button {
+  width: 150px;
+  float: right;
+  padding: 10px;
 }
