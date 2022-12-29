@@ -108,10 +108,11 @@ const MyRentals = () => {
   function calculateCharge(dueDate) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (new Date(dueDate).setHours(0, 0, 0, 0) >= today) {
+    const dueDateMidnight = new Date(dueDate).setHours(0, 0, 0, 0);
+    if (dueDateMidnight >= today) {
       return "-";
     }
-    const diffInMs = new Date(today) - new Date(dueDate);
+    const diffInMs = new Date(today) - new Date(dueDateMidnight);
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     const charge = Math.floor(diffInDays) * 0.3;
     return (charge.toFixed(2) + "").replace(".", ",") + " zł";

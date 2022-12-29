@@ -8,12 +8,13 @@ import MyRentals from "./MyRentals";
 import SearchBook from "./SearchBook";
 import BookDetails from "./BookDetails";
 import AddBook from "./AddBook";
-
+import img from "./images/img.png";
 function App() {
   const [user, setUser] = useLocalStorage("user", "user");
   return (
     <>
       <Header user={user} setUser={setUser}></Header>
+
       <div className="padding-container">
         <Router>
           <Routes>
@@ -28,6 +29,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <img src={img} className="background-image" />
       <Footer></Footer>
     </>
   );

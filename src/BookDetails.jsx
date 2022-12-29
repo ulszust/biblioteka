@@ -59,15 +59,6 @@ function BookDetails(props) {
     </>
   );
 
-  // function amountOfAvaliableBooks(book) {
-  //   const amountOfBooks = book.amount;
-  //   const rentalBooks = userRentals.filter(
-  //     (rental) => rental.bookId === book.id
-  //   ).length;
-  //   const avaliableBooks = amountOfBooks - rentalBooks;
-  //   return avaliableBooks;
-  // }
-
   function BookDetailsCard({ book, user, update }) {
     function onRentBookClick(book) {
       //definiujemy dueDate jako dzisiaj (dzisiaj to zawsze new Date())
@@ -111,6 +102,14 @@ function BookDetails(props) {
       return book.amount <= 0;
     }
 
+    function allAvaliableBookAreRented(book) {
+      const amountOfBooks = book.amount;
+      const rentalBooks = userRentals.filter(
+        (rental) => rental.bookId === book.id
+      ).length;
+      return amountOfBooks === rentalBooks;
+    }
+
     return (
       <Card>
         <Card.Body>
@@ -146,6 +145,7 @@ function BookDetails(props) {
                 variant="danger"
                 className="card-admin-button"
                 onClick={() => onDeleteCopyOfBookClick(book)}
+                disabled={allAvaliableBookAreRented(book)}
               >
                 Usuń egzemplarz
               </Button>

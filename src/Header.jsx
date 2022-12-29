@@ -1,6 +1,6 @@
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import BookLogo from "./images/logonew.jpeg";
+import BookLogo from "./images/logonowe.png";
 import { PersonCircle } from "react-bootstrap-icons";
 import React, { useEffect, useState } from "react";
 import ChooseProfileModal from "./ChooseProfileModal";
@@ -28,7 +28,7 @@ function Header(props) {
     <>
       <Navbar className="header" bg="light" expand="sm">
         <Navbar.Brand href="/">
-          <img width="140" height="50" src={BookLogo} />
+          <img width="180" height="40" src={BookLogo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -45,9 +45,10 @@ function Header(props) {
         <Nav>
           <Nav.Item>
             <PersonCircle
-              size={35}
+              size={40}
               style={{ cursor: "pointer" }}
               onClick={onChangeProfileClick}
+              className="nav-person"
             />
           </Nav.Item>
         </Nav>
