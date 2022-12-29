@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import db from "./Firebase";
-import {
-  doc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-  Timestamp,
-} from "firebase/firestore";
+import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
 import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";
 import BookCover from "./images/ksiazka6.jpg";
 import Button from "react-bootstrap/Button";
 import { isAdmin, isUser } from "./App";
+import { getBook } from "./books";
+import { getRentalFromDB } from "./rentals";
 
 function BookDetails(props) {
   const { user } = props;
@@ -20,6 +16,7 @@ function BookDetails(props) {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [counter, setCounter] = useState(0);
+  const [userRentals, setUserRentals] = useState([]);
 
   //ensure code is run only once (componentWillMount equivalent) (read below)
   useEffect(() => {
@@ -33,6 +30,17 @@ function BookDetails(props) {
   function update() {
     setCounter(counter + 1);
   }
+
+  useEffect(() => {
+    getRentalFromDB().then(({ rentals }) => {
+      const matchedRentals = rentals.map((rental) => {
+        return {
+          bookId: rental.bookId,
+        };
+      });
+      setUserRentals(matchedRentals);
+    });
+  }, []);
 
   return (
     <>
@@ -50,113 +58,109 @@ function BookDetails(props) {
       )}
     </>
   );
-}
 
-async function getBook(bookId) {
-  try {
-    const bookRef = doc(db, "books", bookId);
-    const bookSnap = await getDoc(bookRef);
-    console.log("returned document", bookSnap);
+  // function amountOfAvaliableBooks(book) {
+  //   const amountOfBooks = book.amount;
+  //   const rentalBooks = userRentals.filter(
+  //     (rental) => rental.bookId === book.id
+  //   ).length;
+  //   const avaliableBooks = amountOfBooks - rentalBooks;
+  //   return avaliableBooks;
+  // }
 
-    if (bookSnap.exists()) {
-      console.log("Document data:", bookSnap.data());
-      return {
-        ...bookSnap.data(),
-        id: bookId,
-      };
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-      return undefined;
+  function BookDetailsCard({ book, user, update }) {
+    function onRentBookClick(book) {
+      //definiujemy dueDate jako dzisiaj (dzisiaj to zawsze new Date())
+      const dueDate = new Date();
+      //zmieniamy wartość dueDate za pomocą setDate. Na początku pobieramy dzien z dueDate za pomocą
+      //getDate (czyli dzisiaj) i dodajemy 14 dni
+      dueDate.setDate(dueDate.getDate() + 14);
+      addRentalToDB({ bookId: book.id, dueDate }).then(
+        () => {
+          window.location = "/user/";
+        },
+        () => {
+          window.alert(
+            "Nie udało się wypożyczyć książki. Spróbuj ponownie później."
+          );
+        }
+      );
     }
-  } catch (any) {
-    console.log("some error");
-  }
-}
 
-function BookDetailsCard({ book, user, update }) {
-  function onRentBookClick(book) {
-    //definiujemy dueDate jako dzisiaj (dzisiaj to zawsze new Date())
-    const dueDate = new Date();
-    //zmieniamy wartość dueDate za pomocą setDate. Na początku pobieramy dzien z dueDate za pomocą
-    //getDate (czyli dzisiaj) i dodajemy 14 dni
-    dueDate.setDate(dueDate.getDate() + 14);
-    addRentalToDB({ bookId: book.id, dueDate }).then(
-      () => {
-        window.location = "/user/";
-      },
-      () => {
-        window.alert(
-          "Nie udało się wypożyczyć książki. Spróbuj ponownie później."
-        );
-      }
+    function amountOfAvaliableBooks(book) {
+      const amountOfBooks = book.amount;
+      const rentalBooks = userRentals.filter(
+        (rental) => rental.bookId === book.id
+      ).length;
+      return amountOfBooks - rentalBooks;
+    }
+
+    function onAddCopyOfBookClick(book) {
+      const amountOfBooks = book.amount;
+      const bookRef = doc(db, "books", book.id);
+      updateDoc(bookRef, { amount: amountOfBooks + 1 }).then(() => update());
+    }
+
+    function onDeleteCopyOfBookClick(book) {
+      const amountOfBooks = book.amount;
+      const bookRef = doc(db, "books", book.id);
+      updateDoc(bookRef, { amount: amountOfBooks - 1 }).then(() => update());
+    }
+
+    function isZero(book) {
+      return book.amount <= 0;
+    }
+
+    return (
+      <Card>
+        <Card.Body>
+          <Card.Header>"{book.title}"</Card.Header>
+          <Card.Img variant="top" src={BookCover} />
+          <Card.Text>Autor: {book.authors.join(",  ")}.</Card.Text>
+          <Card.Text>Wydawnictwo: {book.publisher}</Card.Text>
+          <Card.Text>Rok wydania: {book.year}</Card.Text>
+          <Card.Text>Ilość egzemplarzy w bibliotece: {book.amount}</Card.Text>
+          <Card.Text>
+            Ilość dostępnych egzemplarzy: {amountOfAvaliableBooks(book)}
+          </Card.Text>
+          {isUser(user) && (
+            <Button
+              id="rent-button"
+              onClick={() => onRentBookClick(book)}
+              variant="secondary"
+              className="card-user-button"
+              disabled={isZero(book) || amountOfAvaliableBooks(book) === 0}
+            >
+              Wypożycz
+            </Button>
+          )}
+          {isAdmin(user) && (
+            <>
+              <Button
+                variant="success"
+                onClick={() => onAddCopyOfBookClick(book)}
+              >
+                Dodaj egzemplarz
+              </Button>
+              <Button
+                variant="danger"
+                className="card-admin-button"
+                onClick={() => onDeleteCopyOfBookClick(book)}
+              >
+                Usuń egzemplarz
+              </Button>
+            </>
+          )}
+        </Card.Body>
+      </Card>
     );
   }
 
-  function onAddCopyOfBookClick(book) {
-    const amountOfBooks = book.amount;
-    const bookRef = doc(db, "books", book.id);
-    updateDoc(bookRef, { amount: amountOfBooks + 1 }).then(() => update());
+  async function addRentalToDB({ bookId, dueDate }) {
+    const rentalRef = doc(db, "rentals", "user");
+    await updateDoc(rentalRef, {
+      rentals: arrayUnion({ bookId, dueDate: Timestamp.fromDate(dueDate) }),
+    });
   }
-
-  function onDeleteCopyOfBookClick(book) {
-    const amountOfBooks = book.amount;
-    const bookRef = doc(db, "books", book.id);
-    updateDoc(bookRef, { amount: amountOfBooks - 1 }).then(() => update());
-  }
-
-  function isZero(book) {
-    return book.amount <= 0;
-  }
-
-  return (
-    <Card>
-      <Card.Body>
-        <Card.Header>"{book.title}"</Card.Header>
-        <Card.Img variant="top" src={BookCover} />
-        <Card.Text>Autor: {book.authors.join(",  ")}.</Card.Text>
-        <Card.Text>Wydawnictwo: {book.publisher}</Card.Text>
-        <Card.Text>Rok wydania: {book.year}</Card.Text>
-        <Card.Text>Ilość egzemplarzy: {book.amount}</Card.Text>
-        {isUser(user) && (
-          <Button
-            id="rent-button"
-            onClick={() => onRentBookClick(book)}
-            variant="secondary"
-            className="card-user-button"
-            disabled={isZero(book) ? true : false}
-          >
-            Wypożycz
-          </Button>
-        )}
-        {isAdmin(user) && (
-          <>
-            <Button
-              variant="success"
-              onClick={() => onAddCopyOfBookClick(book)}
-            >
-              Dodaj egzemplarz
-            </Button>
-            <Button
-              variant="danger"
-              className="card-admin-button"
-              onClick={() => onDeleteCopyOfBookClick(book)}
-            >
-              Usuń egzemplarz
-            </Button>
-          </>
-        )}
-      </Card.Body>
-    </Card>
-  );
 }
-
-async function addRentalToDB({ bookId, dueDate }) {
-  const rentalRef = doc(db, "rentals", "user");
-  console.log("dodamy rental", bookId, dueDate);
-  await updateDoc(rentalRef, {
-    rentals: arrayUnion({ bookId, dueDate: Timestamp.fromDate(dueDate) }),
-  });
-}
-
 export default BookDetails;

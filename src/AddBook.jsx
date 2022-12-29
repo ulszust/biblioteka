@@ -77,13 +77,6 @@ const AddBook = () => {
               onChange={(e) => setYear(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="form-checkbox">
-            <Form.Check
-              type="checkbox"
-              id="dostepnosc"
-              label="Dostępna do wypożyczenia?"
-            />
-          </Form.Group>
           <Button className="form-button" type="submit" variant="secondary">
             Zapisz zmiany
           </Button>

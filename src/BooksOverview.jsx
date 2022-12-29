@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import db from "./Firebase";
 import Table from "react-bootstrap/Table";
+import { getRentalFromDB } from "./rentals";
+import { getAllBooksFromDB } from "./books";
 
 const BooksOverview = () => {
   const [allBooks, setAllBooks] = useState([]);
@@ -31,7 +33,7 @@ const BooksOverview = () => {
   }, [allBooks]);
 
   return (
-    <Table striped bordered hover>
+    <Table className="table-books-overview" striped bordered hover>
       <thead>
         <tr>
           <th>Tytuł książki</th>
@@ -53,20 +55,5 @@ const BooksOverview = () => {
     </Table>
   );
 };
-
-async function getAllBooksFromDB() {
-  const collectionRef = collection(db, "books");
-  const booksCollection = await getDocs(collectionRef);
-  booksCollection.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-  });
-  return booksCollection.docs.map((it) => ({ id: it.id, ...it.data() }));
-}
-
-async function getRentalFromDB() {
-  const docRef = doc(db, "rentals", "user");
-  const rentals = await getDoc(docRef);
-  return rentals?.data();
-}
 
 export default BooksOverview;

@@ -15,6 +15,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import db from "./Firebase";
+import { getAllBooksFromDB } from "./books";
+import { getRentalFromDB } from "./rentals";
 
 const MyRentals = () => {
   const [allBooks, setAllBooks] = useState([]);
@@ -55,7 +57,9 @@ const MyRentals = () => {
   }, [allBooks]);
 
   function isDue(rental) {
-    return rental.dueDate < new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(rental.dueDate).setHours(0, 0, 0, 0) < today;
   }
 
   function onReturnBookClick(rental) {
@@ -103,16 +107,14 @@ const MyRentals = () => {
 
   function calculateCharge(dueDate) {
     const today = new Date();
-    //jesli duedate nie jest mniejsze niz dzisiaj => '-'
-    if (dueDate >= today) {
+    today.setHours(0, 0, 0, 0);
+    if (new Date(dueDate).setHours(0, 0, 0, 0) >= today) {
       return "-";
     }
-    // w innym wypadku
-    //porownac ile minelo dni od due date do dzisiaj i pomnozyc kazdy x 0,30
     const diffInMs = new Date(today) - new Date(dueDate);
     const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
     const charge = Math.floor(diffInDays) * 0.3;
-    return charge.toPrecision(2) + " zł";
+    return (charge.toFixed(2) + "").replace(".", ",") + " zł";
   }
 
   return (
@@ -199,25 +201,13 @@ const MyRentals = () => {
   );
 };
 
-async function getRentalFromDB() {
-  const docRef = doc(db, "rentals", "user");
-  const rentals = await getDoc(docRef);
-  return rentals?.data();
-}
-
-async function getAllBooksFromDB() {
-  const collectionRef = collection(db, "books");
-  const booksCollection = await getDocs(collectionRef);
-  return booksCollection.docs.map((it) => ({
-    id: it.id,
-    ...it.data(),
-  }));
-}
-
 async function removeBookFromRentals(rental) {
   const rentalRef = doc(db, "rentals", "user");
   await updateDoc(rentalRef, {
-    rentals: arrayRemove({ bookId: rental.bookId, dueDate: rental.dueDate }),
+    rentals: arrayRemove({
+      bookId: rental.bookId,
+      dueDate: rental.dueDate,
+    }),
   });
 }
 
