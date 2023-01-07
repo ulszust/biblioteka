@@ -14,6 +14,7 @@ function App() {
   return (
     <>
       <Header user={user} setUser={setUser}></Header>
+      <img src={img} className="background-image" />
 
       <div className="padding-container">
         <Router>
@@ -29,7 +30,6 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <img src={img} className="background-image" />
       <Footer></Footer>
     </>
   );

@@ -1,10 +1,7 @@
 import {
   arrayRemove,
   arrayUnion,
-  collection,
   doc,
-  getDoc,
-  getDocs,
   Timestamp,
   updateDoc,
 } from "firebase/firestore";

@@ -13,10 +13,8 @@ export async function getBook(bookId) {
   try {
     const bookRef = doc(db, "books", bookId);
     const bookSnap = await getDoc(bookRef);
-    console.log("returned document", bookSnap);
 
     if (bookSnap.exists()) {
-      console.log("Document data:", bookSnap.data());
       return {
         ...bookSnap.data(),
         id: bookId,
@@ -26,7 +24,7 @@ export async function getBook(bookId) {
       console.log("No such document!");
       return undefined;
     }
-  } catch (any) {
-    console.log("some error");
+  } catch (error) {
+    console.log("some error", error);
   }
 }

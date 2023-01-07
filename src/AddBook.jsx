@@ -19,10 +19,8 @@ const AddBook = () => {
       year,
       amount: 1,
     };
-    console.log("będzie dodane", book);
     addToDB(book).then(
-      (created) => {
-        console.log(created);
+      () => {
         window.alert("Książka została dodana!");
         window.location.reload(false);
       },
@@ -88,7 +86,6 @@ const AddBook = () => {
 
 async function addToDB(book) {
   const result = await addDoc(collection(db, "books"), book);
-  console.log("rezultat", result);
   return {
     ...book,
     id: result.id,

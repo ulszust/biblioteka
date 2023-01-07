@@ -17,7 +17,6 @@ function Header(props) {
   }
 
   function onUserChanged(user) {
-    console.log("user:", user);
     if (!!user) {
       setCurrentUser(user);
     }

@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import db from "./Firebase";
 import Table from "react-bootstrap/Table";
 import { getRentalFromDB } from "./rentals";
 import { getAllBooksFromDB } from "./books";
@@ -12,7 +10,6 @@ const BooksOverview = () => {
   useEffect(() => {
     getAllBooksFromDB().then((books) => {
       setAllBooks(books);
-      console.log("pobrane książki", books);
     });
   }, []);
 
