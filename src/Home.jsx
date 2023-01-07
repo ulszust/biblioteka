@@ -1,13 +1,16 @@
 import React from "react";
 import MyRentals from "./MyRentals";
+import { isAdmin, isUser } from "./App";
+import BooksOverview from "./BooksOverview";
 
-const home = () => {
+const Home = (props) => {
+  const { user } = props;
   return (
     <div>
-      <h1>HOME!!</h1>
-      <MyRentals></MyRentals>
+      {isUser(user) && <MyRentals></MyRentals>}
+      {isAdmin(user) && <BooksOverview></BooksOverview>}
     </div>
   );
-}
+};
 
-export default home;
+export default Home;

@@ -1,10 +1,7 @@
 import {
   arrayRemove,
   arrayUnion,
-  collection,
   doc,
-  getDoc,
-  getDocs,
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
@@ -15,6 +12,8 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import db from "./Firebase";
+import { getAllBooksFromDB } from "./books";
+import { getRentalFromDB } from "./rentals";
 
 const MyRentals = () => {
   const [allBooks, setAllBooks] = useState([]);
@@ -55,7 +54,9 @@ const MyRentals = () => {
   }, [allBooks]);
 
   function isDue(rental) {
-    return rental.dueDate < new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return new Date(rental.dueDate).setHours(0, 0, 0, 0) < today;
   }
 
   function onReturnBookClick(rental) {
@@ -101,6 +102,19 @@ const MyRentals = () => {
       );
   }
 
+  function calculateCharge(dueDate) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dueDateMidnight = new Date(dueDate).setHours(0, 0, 0, 0);
+    if (dueDateMidnight >= today) {
+      return "-";
+    }
+    const diffInMs = new Date(today) - new Date(dueDateMidnight);
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+    const charge = Math.floor(diffInDays) * 0.3;
+    return (charge.toFixed(2) + "").replace(".", ",") + " zł";
+  }
+
   return (
     <Table className="table-user" striped bordered hover>
       <thead>
@@ -109,6 +123,7 @@ const MyRentals = () => {
           <th>Szczegóły książki</th>
           <th>Data zwrotu</th>
           <th>Status</th>
+          <th>Należność</th>
           <th>Przedłuż wypożyczenie</th>
           <th>Zwróć książkę</th>
         </tr>
@@ -131,6 +146,7 @@ const MyRentals = () => {
                 {isDue(rental) ? "Przeterminowana" : "Aktywna"}
               </Badge>
             </td>
+            <td>{calculateCharge(rental.dueDate)}</td>
             <td className="td-align-middle">
               <Button
                 className="table-button"
@@ -183,25 +199,13 @@ const MyRentals = () => {
   );
 };
 
-async function getRentalFromDB() {
-  const docRef = doc(db, "rentals", "user");
-  const rentals = await getDoc(docRef);
-  return rentals?.data();
-}
-
-async function getAllBooksFromDB() {
-  const collectionRef = collection(db, "books");
-  const booksCollection = await getDocs(collectionRef);
-  return booksCollection.docs.map((it) => ({
-    id: it.id,
-    ...it.data(),
-  }));
-}
-
 async function removeBookFromRentals(rental) {
   const rentalRef = doc(db, "rentals", "user");
   await updateDoc(rentalRef, {
-    rentals: arrayRemove({ bookId: rental.bookId, dueDate: rental.dueDate }),
+    rentals: arrayRemove({
+      bookId: rental.bookId,
+      dueDate: rental.dueDate,
+    }),
   });
 }
 

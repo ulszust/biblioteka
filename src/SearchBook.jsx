@@ -15,7 +15,6 @@ const SearchBook = () => {
   const [matchedBooks, setMatchedBooks] = useState([]);
 
   function onBookCardClick(bookId) {
-    console.log("po kliknięciu", bookId);
     window.location = "/books/" + bookId;
   }
 
@@ -29,7 +28,6 @@ const SearchBook = () => {
   useEffect(() => {
     getAllBooksFromDB().then((books) => {
       setAllBooks(books);
-      console.log("pobrane książki", books);
     });
   }, []);
 

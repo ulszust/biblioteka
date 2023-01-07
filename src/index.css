@@ -1,146 +1,220 @@
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 .padding-container {
-  padding-bottom: 2.5rem; 
+    padding-bottom: 2.5rem;
+
+
 }
 
 .footer {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  text-align: center;
-  height: 3rem;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    text-align: center;
+    height: 4rem;
+    background-color: white;
+
 
 }
 
-.footer>.footer-text {
-  vertical-align: middle;
+.footer > .footer-text {
+    vertical-align: middle;
+    opacity: 60%;
 }
 
 #root {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  position: relative;
-  min-height: 100vh;
+    position: relative;
+    min-height: 100vh;
+    background-color: #e0e5e6;
+
 }
 
 
 .card-img-top {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50% !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50% !important;
 }
 
 .card-body {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30rem;
 }
 
 .card {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30rem;
-  margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30rem;
+    margin-top: 20px;
 }
 
-.card-button {
-  width: 150px;
-  float: right;
-  padding: 10px;
+.card-user-button {
+    width: 150px;
+    float: right;
+    padding: 10px;
 }
 
 .card-header {
-  font-size: x-large;
-  text-align: center;
+    font-size: x-large;
+    text-align: center;
 }
 
 .card-text {
-  font-size: smaller;
+    font-size: smaller;
 }
 
 .table-user {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  width: revert !important;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: revert !important;
 }
 
 .table-button {
-  width: 5rem;
+    width: 5rem;
 }
 
 .td-align-middle {
-  text-align: center;
+    text-align: center;
 }
 
 .badge-width {
-  width: 117px;
+    width: 117px;
 }
 
 .form-addbook {
-  margin-left: auto;
-  margin-right: auto;
-  width: 40rem;
-  margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40rem;
+    margin-top: 30px;
 }
 
 .form-button {
-  float: inline-end;
-  width: inherit;
-  margin-top: 30px;
+    width: inherit;
+    margin-top: 30px;
 }
 
 .form-checkbox {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .addbook-header {
-  margin-top: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
 .book-search-item-body {
-  display: flex;
-  gap: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
-.book-search-item>.card>.card-body:hover {
-  cursor: pointer;
-  -webkit-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
-  -moz-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
-  box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+.book-search-item > .card > .card-body:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+    -moz-box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
+    box-shadow: 8px 5px 42px 0px rgba(145, 151, 159, 1);
 }
 
 .book-search-result {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
 .book-search-input {
-  margin: 20px 20px 20px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 .book-search-item-authors {
-  color: darkgray;
+    color: darkgray;
 }
 
 .modal-backdrop {
-  background-color: rgba(0,0,0,.6) !important;
+    background-color: rgba(0, 0, 0, .6) !important;
+}
+
+.choose-profile-modal-profile {
+    height: 80px;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 20%;
+
+
+}
+
+.choose-profile-modal-profile-background {
+    height: 80px;
+    width: 100px;
+    border-radius: 20%;
+
+}
+
+.choose-profile-modal-profile-background:hover {
+    background-color: rgba(0, 0, 0, .3);
+    height: 80px;
+    width: 100px;
+}
+
+.choose-profile-modal-body {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.choose-profile-modal-profile-name {
+    text-align: center;
+    font-weight: bold;
+}
+
+.card-admin-button {
+    width: 150px;
+    float: right;
+    padding: 10px;
+}
+
+.table-books-overview {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: revert !important;
+}
+
+.nav-person {
+    margin-right: 20px;
+
+}
+
+tr:nth-child(odd) {
+    background-color: ghostwhite;
+    border: 3px solid lightgray;
+}
+
+tr:nth-child(even) {
+    background-color: ghostwhite;
+    border: 3px solid lightgray;
+}
+
+.background-image {
+    position: absolute;
+    right: 10px;
+    bottom: 70px;
+    height: 170px;
 }

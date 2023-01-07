@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import db from "./Firebase";
 
 const AddBook = () => {
@@ -12,11 +12,15 @@ const AddBook = () => {
 
   function onSubmit(e) {
     e.preventDefault();
-    const book = { title, authors: authors.split(","), publisher, year };
-    console.log("będzie dodane", book);
+    const book = {
+      title,
+      authors: authors.split(","),
+      publisher,
+      year,
+      amount: 1,
+    };
     addToDB(book).then(
-      (created) => {
-        console.log(created);
+      () => {
         window.alert("Książka została dodana!");
         window.location.reload(false);
       },
@@ -71,13 +75,6 @@ const AddBook = () => {
               onChange={(e) => setYear(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="form-checkbox">
-            <Form.Check
-              type="checkbox"
-              id="dostepnosc"
-              label="Dostępna do wypożyczenia?"
-            />
-          </Form.Group>
           <Button className="form-button" type="submit" variant="secondary">
             Zapisz zmiany
           </Button>
@@ -89,7 +86,6 @@ const AddBook = () => {
 
 async function addToDB(book) {
   const result = await addDoc(collection(db, "books"), book);
-  console.log("rezultat", result);
   return {
     ...book,
     id: result.id,
