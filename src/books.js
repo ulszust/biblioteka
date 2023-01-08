@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import db from "./Firebase";
+import { db } from "./Firebase";
 
 export async function getAllBooksFromDB() {
   const collectionRef = collection(db, "books");

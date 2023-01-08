@@ -9,6 +9,7 @@ import SearchBook from "./SearchBook";
 import BookDetails from "./BookDetails";
 import AddBook from "./AddBook";
 import img from "./images/img.png";
+import LoginPage from "./LoginPage";
 function App() {
   const [user, setUser] = useLocalStorage("user", "user");
   return (
@@ -27,6 +28,7 @@ function App() {
               element={<BookDetails user={user} />}
             />
             <Route path="/books/add" element={<AddBook />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </Router>
       </div>
