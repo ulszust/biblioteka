@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./Firebase";
 import { useLocalStorage } from "./App";
@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
         const user = userCredential.user;
         console.log("user", user);
         setToken(userCredential);
+        // window.location = "/";
       })
       .catch((error) => {
         console.log("error", error);

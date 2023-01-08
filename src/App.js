@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -27,13 +33,27 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home user={user} />} exact />
                 <Route path="/books/search" element={<SearchBook />} />
-                <Route path="/user" element={<MyRentals />} />
+                <Route
+                  path="/user"
+                  element={
+                    (isUser(user) && <MyRentals />) || (
+                      <Navigate to="/" replace />
+                    )
+                  }
+                />
                 <Route
                   path="/books/:bookId"
                   element={<BookDetails user={user} />}
                 />
-                <Route path="/books/add" element={<AddBook />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path="/books/add"
+                  element={
+                    (isAdmin(user) && <AddBook />) || (
+                      <Navigate to="/" replace />
+                    )
+                  }
+                />
+                <Route path="/login" element={<Navigate to="/" replace />} />
               </Routes>
             </Router>
           </div>
@@ -41,9 +61,12 @@ function App() {
         </>
       )}
       {!token && (
-        <div style={{ display: "flex" }}>
-          <LoginPage />
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
       )}
     </>
   );
