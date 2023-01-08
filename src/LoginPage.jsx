@@ -2,28 +2,15 @@ import Card from "react-bootstrap/Card";
 import BookLogo from "./images/logonowe.png";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { auth } from "./Firebase";
+import { useAuth } from "./AuthProvider";
 
 function LoginPage() {
+  const { onLogin } = useAuth();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   function onLoginClick() {
-    signInWithEmailAndPassword(auth, login, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("user", user);
-        // ...
-      })
-      .catch((error) => {
-        console.log("error", error);
-
-        window.alert(
-          "Logowanie się nie powiodło. Upewnij się, że podano poprawne dane."
-        );
-      });
+    onLogin(login, password);
   }
 
   return (

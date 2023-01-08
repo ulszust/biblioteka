@@ -10,29 +10,41 @@ import BookDetails from "./BookDetails";
 import AddBook from "./AddBook";
 import img from "./images/img.png";
 import LoginPage from "./LoginPage";
+import { AuthProvider, useAuth } from "./AuthProvider";
+
 function App() {
   const [user, setUser] = useLocalStorage("user", "user");
+  const { token } = useAuth();
   return (
     <>
-      <Header user={user} setUser={setUser}></Header>
-      <img src={img} className="background-image" />
+      {!!token && (
+        <>
+          <Header user={user} setUser={setUser}></Header>
+          <img src={img} className="background-image" />
 
-      <div className="padding-container">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home user={user} />} exact />
-            <Route path="/books/search" element={<SearchBook />} />
-            <Route path="/user" element={<MyRentals />} />
-            <Route
-              path="/books/:bookId"
-              element={<BookDetails user={user} />}
-            />
-            <Route path="/books/add" element={<AddBook />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </Router>
-      </div>
-      <Footer></Footer>
+          <div className="padding-container">
+            <Router>
+              <Routes>
+                <Route path="/" element={<Home user={user} />} exact />
+                <Route path="/books/search" element={<SearchBook />} />
+                <Route path="/user" element={<MyRentals />} />
+                <Route
+                  path="/books/:bookId"
+                  element={<BookDetails user={user} />}
+                />
+                <Route path="/books/add" element={<AddBook />} />
+                <Route path="/login" element={<LoginPage />} />
+              </Routes>
+            </Router>
+          </div>
+          <Footer></Footer>
+        </>
+      )}
+      {!token && (
+        <div style={{ display: "flex" }}>
+          <LoginPage />
+        </div>
+      )}
     </>
   );
 }
@@ -48,7 +60,7 @@ export function isAdmin(user) {
 }
 
 //todo:change this code
-function useLocalStorage(key, initialValue) {
+export function useLocalStorage(key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
