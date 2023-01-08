@@ -29,10 +29,9 @@ function LoginPage() {
   return (
     <Card>
       <Card.Img src={BookLogo} />
-      <Card.Body>
-        <Card.Text>
+      <Card.Body className="login-page-card">
+        <Form>
           <Form.Group htmlFor="login">
-            <Form.Label></Form.Label>
             <Form.Control
               id="login"
               type="email"
@@ -40,8 +39,8 @@ function LoginPage() {
               onChange={(e) => setLogin(e.target.value)}
             />
           </Form.Group>
+          <br />
           <Form.Group htmlFor="password">
-            <Form.Label></Form.Label>
             <Form.Control
               id="password"
               type="password"
@@ -49,7 +48,7 @@ function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-        </Card.Text>
+        </Form>
         <Button variant="secondary" onClick={onLoginClick}>
           Zaloguj się
         </Button>
