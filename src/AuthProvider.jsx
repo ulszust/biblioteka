@@ -8,14 +8,14 @@ export const useAuth = () => {
   return React.useContext(AuthContext);
 };
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useLocalStorage("token", null);
+  const [credentials, setCredentials] = useLocalStorage("credentials", null);
 
   const handleLogin = (login, password) => {
     signInWithEmailAndPassword(auth, login, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("user", user);
-        setToken(userCredential);
+        setCredentials(userCredential);
         // window.location = "/";
       })
       .catch((error) => {
@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
-    setToken(null);
+    setCredentials(null);
   };
 
   const value = {
-    token,
+    credentials,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

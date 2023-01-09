@@ -16,14 +16,14 @@ import BookDetails from "./BookDetails";
 import AddBook from "./AddBook";
 import img from "./images/img.png";
 import LoginPage from "./LoginPage";
-import { AuthProvider, useAuth } from "./AuthProvider";
+import { useAuth } from "./AuthProvider";
 
 function App() {
   const [user, setUser] = useLocalStorage("user", "user");
-  const { token } = useAuth();
+  const { credentials } = useAuth();
   return (
     <>
-      {!!token && (
+      {!!credentials && (
         <>
           <Header user={user} setUser={setUser}></Header>
           <img src={img} className="background-image" />
@@ -60,7 +60,7 @@ function App() {
           <Footer></Footer>
         </>
       )}
-      {!token && (
+      {!credentials && (
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
