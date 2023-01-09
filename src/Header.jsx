@@ -5,6 +5,7 @@ import { PersonCircle } from "react-bootstrap-icons";
 import React, { useEffect, useState } from "react";
 import ChooseProfileModal from "./ChooseProfileModal";
 import { isAdmin, isUser } from "./App";
+import { NavLink } from "react-router-dom";
 
 function Header(props) {
   const { user, setUser } = props;
@@ -32,13 +33,19 @@ function Header(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/books/search">Szukaj</Nav.Link>
+            <Nav.Link as={NavLink} to="/books/search">
+              Szukaj
+            </Nav.Link>
             {isUser(user) && (
-              <Nav.Link href="/user">Moje wypożyczenia</Nav.Link>
+              <Nav.Link as={NavLink} to="/user">
+                Moje wypożyczenia
+              </Nav.Link>
             )}
             {isAdmin(user) && (
-              <Nav.Link href="/books/add">Dodaj książkę</Nav.Link>
-            )}
+              <Nav.Link as={NavLink} to="/books/add">
+                Dodaj książkę
+              </Nav.Link>
+            )}{" "}
           </Nav>
         </Navbar.Collapse>
         <Nav>

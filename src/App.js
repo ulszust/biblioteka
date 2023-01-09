@@ -24,41 +24,35 @@ function App() {
   return (
     <>
       {!!credentials && (
-        <>
+        <Router>
           <Header user={user} setUser={setUser}></Header>
           <img src={img} className="background-image" />
 
           <div className="padding-container">
-            <Router>
-              <Routes>
-                <Route path="/" element={<Home user={user} />} exact />
-                <Route path="/books/search" element={<SearchBook />} />
-                <Route
-                  path="/user"
-                  element={
-                    (isUser(user) && <MyRentals />) || (
-                      <Navigate to="/" replace />
-                    )
-                  }
-                />
-                <Route
-                  path="/books/:bookId"
-                  element={<BookDetails user={user} />}
-                />
-                <Route
-                  path="/books/add"
-                  element={
-                    (isAdmin(user) && <AddBook />) || (
-                      <Navigate to="/" replace />
-                    )
-                  }
-                />
-                <Route path="/login" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Router>
+            <Routes>
+              <Route path="/" element={<Home user={user} />} exact />
+              <Route path="/books/search" element={<SearchBook />} />
+              <Route
+                path="/user"
+                element={
+                  (isUser(user) && <MyRentals />) || <Navigate to="/" replace />
+                }
+              />
+              <Route
+                path="/books/:bookId"
+                element={<BookDetails user={user} />}
+              />
+              <Route
+                path="/books/add"
+                element={
+                  (isAdmin(user) && <AddBook />) || <Navigate to="/" replace />
+                }
+              />
+              <Route path="/login" element={<Navigate to="/" replace />} />
+            </Routes>
           </div>
           <Footer></Footer>
-        </>
+        </Router>
       )}
       {!credentials && (
         <BrowserRouter>
