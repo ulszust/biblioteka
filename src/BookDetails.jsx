@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import db from "./Firebase";
+import { db } from "./Firebase";
 import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
 import Spinner from "react-bootstrap/Spinner";
 import { Card } from "react-bootstrap";

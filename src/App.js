@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -9,28 +15,53 @@ import SearchBook from "./SearchBook";
 import BookDetails from "./BookDetails";
 import AddBook from "./AddBook";
 import img from "./images/img.png";
+import LoginPage from "./LoginPage";
+import { useAuth } from "./AuthProvider";
+
 function App() {
   const [user, setUser] = useLocalStorage("user", "user");
+  const { credentials } = useAuth();
   return (
     <>
-      <Header user={user} setUser={setUser}></Header>
-      <img src={img} className="background-image" />
-
-      <div className="padding-container">
+      {!!credentials && (
         <Router>
-          <Routes>
-            <Route path="/" element={<Home user={user} />} exact />
-            <Route path="/books/search" element={<SearchBook />} />
-            <Route path="/user" element={<MyRentals />} />
-            <Route
-              path="/books/:bookId"
-              element={<BookDetails user={user} />}
-            />
-            <Route path="/books/add" element={<AddBook />} />
-          </Routes>
+          <Header user={user} setUser={setUser}></Header>
+          <img src={img} className="background-image" />
+
+          <div className="padding-container">
+            <Routes>
+              <Route path="/" element={<Home user={user} />} exact />
+              <Route path="/books/search" element={<SearchBook />} />
+              <Route
+                path="/user"
+                element={
+                  (isUser(user) && <MyRentals />) || <Navigate to="/" replace />
+                }
+              />
+              <Route
+                path="/books/:bookId"
+                element={<BookDetails user={user} />}
+              />
+              <Route
+                path="/books/add"
+                element={
+                  (isAdmin(user) && <AddBook />) || <Navigate to="/" replace />
+                }
+              />
+              <Route path="/login" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+          <Footer></Footer>
         </Router>
-      </div>
-      <Footer></Footer>
+      )}
+      {!credentials && (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
+      )}
     </>
   );
 }
@@ -46,7 +77,7 @@ export function isAdmin(user) {
 }
 
 //todo:change this code
-function useLocalStorage(key, initialValue) {
+export function useLocalStorage(key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {

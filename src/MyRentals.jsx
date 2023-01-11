@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
-import db from "./Firebase";
+import { db } from "./Firebase";
 import { getAllBooksFromDB } from "./books";
 import { getRentalFromDB } from "./rentals";
 

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import db from "./Firebase";
+import { db } from "./Firebase";
 
 //tworzymy komponent funkcyjny SearchBook (deklarujemy zmienną i przypisujemy funkcję anonimową,
 //zamiast tego można zdeklarować normalną funkcję)
