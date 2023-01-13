@@ -246,3 +246,11 @@ margin: auto !important;
     margin-top: 1rem;
     text-align: center;
 }
+
+
+.full-screen-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 83vh;
+}

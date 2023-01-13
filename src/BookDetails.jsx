@@ -42,9 +42,11 @@ function BookDetails(props) {
   return (
     <>
       {!!loading && (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <div className="full-screen-spinner">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       )}
       {!loading && (
         <BookDetailsCard
