@@ -48,7 +48,7 @@ function BookDetails(props) {
           </Spinner>
         </div>
       )}
-      {!loading && (
+      {!!loading || (
         <BookDetailsCard
           book={book}
           user={user}

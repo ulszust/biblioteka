@@ -22,7 +22,7 @@ const AddBook = () => {
     addToDB(book).then(
       () => {
         window.alert("Książka została dodana!");
-        window.location.reload(false);
+        window.location.reload();
       },
       () => {
         window.alert(

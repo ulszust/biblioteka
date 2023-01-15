@@ -13,10 +13,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = (login, password) => {
     signInWithEmailAndPassword(auth, login, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("user", user);
         setCredentials(userCredential);
-        // window.location = "/";
       })
       .catch((error) => {
         console.log("error", error);
