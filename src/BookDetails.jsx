@@ -18,14 +18,11 @@ function BookDetails(props) {
   const [counter, setCounter] = useState(0);
   const [userRentals, setUserRentals] = useState([]);
 
-  //ensure code is run only once (componentWillMount equivalent) (read below)
   useEffect(() => {
     getBook(bookId)
       .then((it) => setBook(it))
       .finally(() => setLoading(false));
-  }, [bookId, counter]); //dont forget this array - this is list of dependencies.
-  //if empty - means never reload, if not empty will reload upon any of these dependencies changed
-  //if undefined (e.g. you forgot to write that []) will load on every re-render (may cause infinite loop!)
+  }, [bookId, counter]);
 
   function update() {
     setCounter(counter + 1);
@@ -45,11 +42,13 @@ function BookDetails(props) {
   return (
     <>
       {!!loading && (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <div className="full-screen-spinner">
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       )}
-      {!loading && (
+      {!!loading || (
         <BookDetailsCard
           book={book}
           user={user}
@@ -61,10 +60,7 @@ function BookDetails(props) {
 
   function BookDetailsCard({ book, user, update }) {
     function onRentBookClick(book) {
-      //definiujemy dueDate jako dzisiaj (dzisiaj to zawsze new Date())
       const dueDate = new Date();
-      //zmieniamy wartość dueDate za pomocą setDate. Na początku pobieramy dzien z dueDate za pomocą
-      //getDate (czyli dzisiaj) i dodajemy 14 dni
       dueDate.setDate(dueDate.getDate() + 14);
       addRentalToDB({ bookId: book.id, dueDate }).then(
         () => {

@@ -22,7 +22,7 @@ const AddBook = () => {
     addToDB(book).then(
       () => {
         window.alert("Książka została dodana!");
-        window.location.reload(false);
+        window.location.reload();
       },
       () => {
         window.alert(
@@ -33,9 +33,9 @@ const AddBook = () => {
   }
   return (
     <>
-      <h5 className="addbook-header">
+      <h3 className="addbook-header">
         Aby dodać pozycję, wypełnij poniższy formularz:{" "}
-      </h5>
+      </h3>
       <Form onSubmit={onSubmit}>
         <fieldset className="form-addbook">
           <Form.Group>

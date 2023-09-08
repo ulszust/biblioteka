@@ -1,9 +1,12 @@
 import Modal from "react-bootstrap/Modal";
 import { noop } from "bootstrap/js/src/util";
 import { PersonFill, PersonFillGear } from "react-bootstrap-icons";
+import { useAuth } from "./AuthProvider";
+import Button from "react-bootstrap/Button";
 
 const ChooseProfileModal = (props) => {
   const { show, handleClose, currentUser, onProfileChanged } = props;
+  const { onLogout } = useAuth();
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -36,7 +39,15 @@ const ChooseProfileModal = (props) => {
           }
         ></Profile>
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
+      <Modal.Footer>
+        <Button
+          variant="secondary"
+          onClick={onLogout}
+          className="choose-profile-modal-button"
+        >
+          Wyloguj się
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };

@@ -30,26 +30,34 @@ const BooksOverview = () => {
   }, [allBooks]);
 
   return (
-    <Table className="table-books-overview" striped bordered hover>
-      <thead>
-        <tr>
-          <th>Tytuł książki</th>
-          <th>Ilość wszystkich egzemplarzy</th>
-          <th>Ilość wypożyczonych egzemplarzy</th>
-        </tr>
-      </thead>
-      <tbody>
-        {allBooks.map((book) => (
+    <>
+      <h2 className="books-overview-h2">Katalog</h2>
+      <Table className="table-books-overview" striped bordered hover>
+        <thead>
           <tr>
-            <td>{book.title}</td>
-            <td>{book.amount}</td>
-            <td>
-              {userRentals.filter((rental) => rental.bookId === book.id).length}
-            </td>
+            <th>Tytuł książki</th>
+            <th>Ilość wszystkich egzemplarzy</th>
+            <th>Ilość wypożyczonych egzemplarzy</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {allBooks.map((book) => (
+            <tr>
+              <td>
+                <a href={"/books/" + book.id}>{book.title}</a>
+              </td>
+              <td>{book.amount}</td>
+              <td>
+                {
+                  userRentals.filter((rental) => rental.bookId === book.id)
+                    .length
+                }
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
   );
 };
 

@@ -116,86 +116,93 @@ const MyRentals = () => {
   }
 
   return (
-    <Table className="table-user" striped bordered hover>
-      <thead>
-        <tr>
-          <th>Tytuł książki</th>
-          <th>Szczegóły książki</th>
-          <th>Data zwrotu</th>
-          <th>Status</th>
-          <th>Należność</th>
-          <th>Przedłuż wypożyczenie</th>
-          <th>Zwróć książkę</th>
-        </tr>
-      </thead>
-      <tbody>
-        {userRentals.map((rental) => (
+    <>
+      <h2 className="my-rentals-h2">Aktualne wypożyczenia</h2>
+      <Table className="table-user" striped bordered hover>
+        <thead>
           <tr>
-            <td>{rental.book.title}</td>
-            <td>
-              {" "}
-              <a href={"/books/" + rental.book.id}>Link</a>
-            </td>
-            <td>{rental.dueDate.toLocaleDateString()}</td>
-            <td className="td-align-middle">
-              <Badge
-                className="badge-width"
-                pill
-                bg={isDue(rental) ? "danger" : "success"}
-              >
-                {isDue(rental) ? "Przeterminowana" : "Aktywna"}
-              </Badge>
-            </td>
-            <td>{calculateCharge(rental.dueDate)}</td>
-            <td className="td-align-middle">
-              <Button
-                className="table-button"
-                size="sm"
-                variant="secondary"
-                onClick={() => handleShow(rental)}
-              >
-                Przedłuż
-              </Button>
-              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Wydłuż termin wypożyczenia książki</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <p>
-                    Możesz przedłużyć wypożyczenie maksymalnie o 21 dni. Dokonaj
-                    wyboru poniżej.
-                  </p>
-                  <Form.Select onChange={(e) => setExtendDays(e.target.value)}>
-                    <option>Ile dodatkowych dni potrzebujesz?</option>
-                    <option value="7">7 dni</option>
-                    <option value="14">14 dni</option>
-                    <option value="21">21 dni</option>
-                  </Form.Select>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Zamknij
-                  </Button>
-                  <Button variant="primary" onClick={onExtendDueDateClick}>
-                    Zapisz
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </td>
-            <td className="td-align-middle">
-              <Button
-                onClick={() => onReturnBookClick(rental)}
-                className="table-button"
-                size="sm"
-                variant="secondary"
-              >
-                Zwróć
-              </Button>
-            </td>
+            <th>Tytuł książki</th>
+            <th>Szczegóły książki</th>
+            <th>Data zwrotu</th>
+            <th>Status</th>
+            <th>Należność</th>
+            <th>Przedłuż wypożyczenie</th>
+            <th>Zwróć książkę</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {userRentals.map((rental) => (
+            <tr>
+              <td>{rental.book.title}</td>
+              <td>
+                {" "}
+                <a href={"/books/" + rental.book.id}>Link</a>
+              </td>
+              <td>{rental.dueDate.toLocaleDateString()}</td>
+              <td className="td-align-middle">
+                <Badge
+                  className="badge-width"
+                  pill
+                  bg={isDue(rental) ? "danger" : "success"}
+                >
+                  {isDue(rental) ? "Przeterminowana" : "Aktywna"}
+                </Badge>
+              </td>
+              <td>{calculateCharge(rental.dueDate)}</td>
+              <td className="td-align-middle">
+                <Button
+                  className="table-button"
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => handleShow(rental)}
+                >
+                  Przedłuż
+                </Button>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>
+                      Wydłuż termin wypożyczenia książki
+                    </Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>
+                      Możesz przedłużyć wypożyczenie maksymalnie o 21 dni.
+                      Dokonaj wyboru poniżej.
+                    </p>
+                    <Form.Select
+                      onChange={(e) => setExtendDays(e.target.value)}
+                    >
+                      <option>Ile dodatkowych dni potrzebujesz?</option>
+                      <option value="7">7 dni</option>
+                      <option value="14">14 dni</option>
+                      <option value="21">21 dni</option>
+                    </Form.Select>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Zamknij
+                    </Button>
+                    <Button variant="primary" onClick={onExtendDueDateClick}>
+                      Zapisz
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </td>
+              <td className="td-align-middle">
+                <Button
+                  onClick={() => onReturnBookClick(rental)}
+                  className="table-button"
+                  size="sm"
+                  variant="secondary"
+                >
+                  Zwróć
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
   );
 };
 
