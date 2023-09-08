@@ -7,10 +7,10 @@
 
 
 ## General info
-<details>
+<p>
 A simple library management system. It has the function of borrowing, returning, adding and deleting copies of books.<br/>
 It has two different views from the level of the library user and the library administrator.
-</details>
+</p>
 
 ## Technologies 
 <ul>
@@ -20,13 +20,16 @@ It has two different views from the level of the library user and the library ad
 </ul>
 
 ## Setup 
-<details>
+<p>
 In the project directory, you can run:<br/>
- `npm start`<br/>
+ ```npm start```<br/>
+ 
 Runs the app in the development mode.<br/>
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.<br/>
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-</details>
+</p>
+
 
 ## Application view
 ![Zrzut ekranu bibliotka5](https://github.com/ulszust/biblioteka/assets/109608357/30358546-60bc-4cd3-af68-7d0a8b743aeb)
