@@ -31,7 +31,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 
-## Application view
+## Application preview
 ![Zrzut ekranu bibliotka5](https://github.com/ulszust/biblioteka/assets/109608357/30358546-60bc-4cd3-af68-7d0a8b743aeb)
 ![Zrzut ekranu biblioteka4](https://github.com/ulszust/biblioteka/assets/109608357/3d77c00d-4fb2-46e0-ae4e-764313d9a464)
 ![Zrzut ekranu biblioteka3](https://github.com/ulszust/biblioteka/assets/109608357/fb2ba8b9-672a-4b7d-8408-4ac456289fa9)
